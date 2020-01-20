@@ -10,10 +10,10 @@ class State {
     T state;
     // Cost to get to this state
     double cost;
-    State<T>* cameFrom = nullptr;
     bool visited;
     bool isInitial = false;
     bool isGoal = false;
+    State<T>* cameFrom = nullptr;
 public:
     /// Constructor
     State(T stateTemp, double c) {
@@ -35,7 +35,7 @@ public:
 
     //overriding Object's Equals method.///////////////////////////////////////////////
     bool equals(State<T>* st) {
-        return this->equals(st.state);
+
     }
 
     virtual void setCameFrom(State<T*> came) {
@@ -44,10 +44,6 @@ public:
 
     virtual void getCameFrom() {
         return this->cameFrom;
-    }
-
-    virtual void setCost(double val) {
-        this->cost = val;
     }
 
     virtual void getCost() {

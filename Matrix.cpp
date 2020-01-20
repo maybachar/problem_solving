@@ -22,6 +22,6 @@ bool Matrix::isGoalState(State<Point*>* state) {
     return state->isDest();
 }
 
-list<State<Point*>*> Matrix::getAllPossibleState(State<Point*>* state) {
+list<State<Point*>*> Matrix::getAllPossibleStates(State<Point*>* state) {
 
 }

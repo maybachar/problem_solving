@@ -9,6 +9,7 @@ public:
     ~Point();
     int getX();
     int getY();
+    bool equals(Point point);
 };
 
 #endif //PROBLEM_SOLVING_POINT_H

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Matrix : public Searchable<Point> {
+class Matrix : public Searchable<Point*> {
     vector<vector<State<Point*>*>> matrix;
     State<Point*>* initialState;
     State<Point*>* goalState;
@@ -17,7 +17,7 @@ public:
     virtual State<Point*>* getInitialState();
     virtual State<Point*>* getGoalState();
     virtual bool isGoalState(State<Point*>* state);
-    virtual list<State<Point*>*> getAllPossibleState(State<Point*>* state);
+    virtual list<State<Point*>*> getAllPossibleStates(State<Point*>* state);
 };
 
 #endif //PROBLEM_SOLVING_MATRIX_H

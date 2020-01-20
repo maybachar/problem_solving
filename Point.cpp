@@ -17,4 +17,8 @@ int Point::getY() {
     return yPos;
 }
 
+bool Point::equals(Point point) {
+    return (this->xPos == point.getX() && this->yPos == point.getY());
+}
+
 
