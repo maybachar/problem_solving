@@ -1,16 +1,16 @@
-#include "SearcherToSolver.h"
+#include "SearchSolver.h"
 #include "Searcher.h"
 
 /// Constructor
-SearcherToSolver::SearcherToSolver(Searcher<Point*, vector<State<Point*>*>>* searcherObj) {
+SearchSolver::SearchSolver(Searcher<Point*, vector<State<Point*>*>>* searcherObj) {
     this->searcher = searcherObj;
 }
 
 /// Destructor
-SearcherToSolver::~SearcherToSolver() {}
+SearchSolver::~SearchSolver() {}
 
 
-string SearcherToSolver::solve(Searchable<Point*>* problem) {
+string SearchSolver::solve(Searchable<Point*>* problem) {
     string path = "";
     vector<string> directions;
     // Get a vector of states in the shortest path

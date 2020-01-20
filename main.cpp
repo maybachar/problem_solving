@@ -3,7 +3,7 @@
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
 #include "MyClientHandler.h"
-#include "SearcherToSolver.h"
+#include "SearchSolver.h"
 #include "Searchable.h"
 #include "Point.h"
 #include <string>
@@ -30,7 +30,7 @@ namespace boot {
         void matrixMain(int argc, char *argv[]) {
             int port = atoi(argv[1]);
             Searcher<Point*>* searcher = new AStar<Point*>();
-            Solver<Searchable<Point*>*, string>* sr = new SearcherToSolver(searcher);
+            Solver<Searchable<Point*>*, string>* sr = new SearchSolver(searcher);
             CacheManager<Searchable<Point*>*, string>* cm = new FileCacheManager<Searchable<Point*>*, string>();
             ClientHandler* handler = new MyClientHandler<Searchable<Point*>*, string>(sr, cm);
             server_side::Server* server = new MySerialServer();

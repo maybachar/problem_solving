@@ -5,6 +5,8 @@ Matrix::Matrix(vector<vector<State<Point*>*>> mat, State<Point*>* init, State<Po
     this->matrix = mat;
     this->initialState = init;
     this->goalState = goal;
+    this->rows = mat.size();
+    this->columns = mat.at(0).size();
 }
 
 /// Destructor
@@ -22,6 +24,24 @@ bool Matrix::isGoalState(State<Point*>* state) {
     return state->isDest();
 }
 
-list<State<Point*>*> Matrix::getAllPossibleStates(State<Point*>* state) {
-
+vector<State<Point*>*> Matrix::getAllPossibleStates(State<Point*>* state) {
+    vector<State<Point*>*> possibleStates;
+    int xPos = state->getState()->getX();
+    int yPos = state->getState()->getY();
+    // If this state can be achieved (the cost is not infinite)
+    if (state->getCost() != -1) {
+        if (xPos != 0) {
+            possibleStates.push_back(this->matrix.at(xPos - 1).at(yPos));
+        }
+        if (xPos != this->rows - 1) {
+            possibleStates.push_back(this->matrix.at(xPos + 1).at(yPos));
+        }
+        if (yPos != 0) {
+            possibleStates.push_back(this->matrix.at(xPos).at(yPos - 1));
+        }
+        if (yPos != this->columns - 1) {
+            possibleStates.push_back(this->matrix.at(xPos).at(yPos + 1));
+        }
+    }
+    return possibleStates;
 }
