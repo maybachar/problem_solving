@@ -9,7 +9,8 @@ template <class T>
 class State {
     T state;
     // Cost to get to this state
-    double cost;
+    double cost = 0;
+    double accumulateCost = 0;
     bool visited;
     bool isInitial = false;
     bool isGoal = false;
@@ -19,36 +20,31 @@ public:
     State(T stateTemp, double c) {
         this->state = stateTemp;
         this->cost = c;
+        this->accumulateCost = c;
     }
 
     /// Destructor
     ~State() {}
 
-
-    virtual T getState() {
+    T getState() {
         return this->state;
     }
 
-    virtual void setState(T stateTemp) {
+    void setState(T stateTemp) {
         this->state = stateTemp;
     }
 
-    //overriding Object's Equals method.///////////////////////////////////////////////
-    bool equals(State<T>* st) {
-
-    }
-
-    virtual void setCameFrom(State<T*> came) {
+    void setCameFrom(State<T>* came) {
         this->cameFrom = came;
     }
 
-    virtual void getCameFrom() {
+    State<T>* getCameFrom() {
         return this->cameFrom;
     }
 
-    virtual double getCost() {
+     double getCost() {
         return this->cost;
-    }
+     }
 
     void setVisited(bool val) {
         this->visited = val;
@@ -72,6 +68,14 @@ public:
 
     void setIsDest() {
         this->isGoal = true;
+    }
+
+    void addToAccumulateCost(double addCost) {
+        this->accumulateCost += addCost;
+    }
+
+    double getAccumulateCost() {
+        return this->accumulateCost;
     }
 };
 
