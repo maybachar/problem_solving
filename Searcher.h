@@ -19,15 +19,15 @@ public:
         return this->numOfNudesEvaluated;
     }
 
-    virtual vector<State<T>*> backTrace(State<T>* source, State<T>* dest){
+    virtual vector<State<T>*> backTrace(State<T>* source, State<T>* dest) {
         vector<State<T>*> solution;
-        solution.push_back(dest);
-        State<T*> node = dest->getCameFrom();
-        while (!node.equals(source)){
-            solution.push_back(node);
-            node = node.getCameFrom();
+        solution.insert(solution.begin(), dest);
+        State<T>* node = dest->getCameFrom();
+        while (!node->isSource()) {
+            solution.insert(solution.begin(), node);
+            node = node->getCameFrom();
         }
-        solution.push_back(source);
+        solution.insert(solution.begin(), source);
         return solution;
     }
 };
