@@ -10,10 +10,10 @@ template <class T>
 class Searchable {
 public:
     ~Searchable() {}
-    virtual State<T>* getInitialState();
-    virtual State<T>* getGoalState();
-    virtual bool isGoalState(State<T>*);
-    virtual list<State<T>*> getAllPossibleStates(State<T>*);
+    virtual State<T>* getInitialState() = 0;
+    virtual State<T>* getGoalState() = 0;
+    virtual bool isGoalState(State<T>*) = 0;
+    virtual list<State<T>*> getAllPossibleStates(State<T>*) = 0;
 };
 
 #endif //PROBLEM_SOLVING_SEARCHABLE_H

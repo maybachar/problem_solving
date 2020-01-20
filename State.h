@@ -46,7 +46,7 @@ public:
         return this->cameFrom;
     }
 
-    virtual void getCost() {
+    virtual double getCost() {
         return this->cost;
     }
 
