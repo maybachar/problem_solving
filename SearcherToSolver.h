@@ -9,16 +9,15 @@
 
 
 // problem: Searchable<Point*>* (matrix)
-// solution: vector<State<Point*>*> (vector of the states in the path)
+// solution: string created from the vector of the states in the path
 
-class SearcherToSolver : public Solver <Searchable<Point*>*, vector<State<Point*>*>> {
+class SearcherToSolver : public Solver <Searchable<Point*>*, string> {
     Searcher<Point*, vector<State<Point*>*>>* searcher;
 public:
     SearcherToSolver(Searcher<Point*, vector<State<Point*>*>>* searcherObj);
     virtual ~SearcherToSolver();
-    virtual vector<State<Point*>*> solve(Searchable<Point*>* problem);
+    virtual string solve(Searchable<Point*>* problem);
 };
-
 
 
 #endif //PROBLEM_SOLVING_SEARCHERTOSOLVER_H

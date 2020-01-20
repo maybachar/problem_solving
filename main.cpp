@@ -21,15 +21,25 @@ namespace boot {
             ClientHandler* handler = new MyTestClientHandler<string, string>(sr, cm);
             server_side::Server* server = new MySerialServer();
             server->open(port, handler);
+            delete sr;
+            delete cm;
+            delete handler;
+            delete server;
         }
 /*
         void matrixMain(int argc, char *argv[]) {
             int port = atoi(argv[1]);
-            Solver<Searchable<Point*>*, vector<State<Point*>*>>* sr = new SearcherToSolver(new Astar);
-            CacheManager<Searchable<Point*>*, vector<State<Point*>*>>* cm = new FileCacheManager<Searchable<Point*>*, vector<State<Point*>*>>();
-            ClientHandler* handler = new MyClientHandler<Searchable<Point*>*, vector<State<Point*>*>>(sr, cm);
+            Searcher<Point*>* searcher = new AStar<Point*>();
+            Solver<Searchable<Point*>*, string>* sr = new SearcherToSolver(searcher);
+            CacheManager<Searchable<Point*>*, string>* cm = new FileCacheManager<Searchable<Point*>*, string>();
+            ClientHandler* handler = new MyClientHandler<Searchable<Point*>*, string>(sr, cm);
             server_side::Server* server = new MySerialServer();
             server->open(port, handler);
+            delete searcher;
+            delete sr;
+            delete cm;
+            delete handler;
+            delete server;
         }
 */
     };
