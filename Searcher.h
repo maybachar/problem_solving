@@ -16,7 +16,7 @@ public:
     virtual Solution search(Searchable<T> *searchable) {}
 
     virtual double getSearcherNumOfNodes(){
-        return this->numOfNudesEvaluated;
+        return this->numOfNodesEvaluated;
     }
 
     virtual vector<State<T>*> backTrace(State<T>* source, State<T>* dest) {
