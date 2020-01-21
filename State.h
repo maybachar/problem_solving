@@ -11,6 +11,7 @@ class State {
     // Cost to get to this state
     double cost = 0;
     double accumulateCost = 0;
+    double distanceFromDest;
     bool visited;
     bool isInitial = false;
     bool isGoal = false;
@@ -76,6 +77,14 @@ public:
 
     double getAccumulateCost() {
         return this->accumulateCost;
+    }
+
+    void setDistanceFromDest(double distance) {
+        this->distanceFromDest = distance;
+    }
+
+    double getDistanceFromDest() {
+        return this->distanceFromDest;
     }
 };
 

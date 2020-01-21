@@ -73,6 +73,7 @@ public:
                 col = stoi(out[1]);
                 matrix.at(row).at(col)->setIsDest();
                 goalState = matrix.at(row).at(col);
+                this->setDistancesFromDest(matrix, row, col);
                 // Create a new matrix
                 matrixObj = new Matrix(matrix, initialState, goalState);
                 break;
@@ -114,6 +115,18 @@ public:
         if (is_sent == -1) {
             cerr << "Could not send solution to client" << endl;
             exit(-1);
+        }
+    }
+
+    void setDistancesFromDest(vector<vector<State<Point*>*>> &matrix, int destX, int destY) {
+        int rows, columns, i, j, distance;
+        rows = matrix.size();
+        columns = matrix.at(0).size();
+        for (i = 0; i < rows; i++) {
+            for (j = 0; j < columns; j++) {
+                distance = abs(i - destX) + abs(j - destY);
+                matrix.at(i).at(j)->setDistanceFromDest(distance);
+            }
         }
     }
 };
