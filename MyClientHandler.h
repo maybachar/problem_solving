@@ -18,10 +18,10 @@ using namespace std;
 template <class Problem, class Solution>
 class MyClientHandler : public ClientHandler {
     Solver<Problem, Solution>* solver;
-    CacheManager<Problem, Solution>* cacheManager;
+    CacheManager<string, string>* cacheManager;
 public:
     /// Constructor
-    MyClientHandler(Solver<Problem, Solution>* s, CacheManager<Problem, Solution>* cm) {
+    MyClientHandler(Solver<Problem, Solution>* s, CacheManager<string, string>* cm) {
         this->solver = s;
         this->cacheManager = cm;
     }
@@ -33,12 +33,13 @@ public:
     virtual void handleClient(int client_socket) {
         int is_sent, xPos = 0, yPos = 0, iterAfterEnd = 0, row, col;
         double cost;
-        string str = "", bufferStr, rest, line, problem, solution;
+        string str = "", bufferStr, rest, line, problem, solution, problemStr;
         Matrix* matrixObj = nullptr;
         Point* point;
         State<Point*> *state = nullptr, *initialState = nullptr, *goalState = nullptr;
         vector<State<Point*>*> matrixRow;
         vector<vector<State<Point*>*>> matrix;
+        vector<string> clientInput;
         char* solutionToSend;
         // Read matrix from client
         while (iterAfterEnd <= 2) {
@@ -49,8 +50,9 @@ public:
             bufferStr = buffer;
             // Concatenate the rest of the string from the previous iteration to the string from the current iteration
             str = str + bufferStr;
-            // Get the first part of the string until '\n'
-            line = str.substr(0, str.find("\n"));
+            // Get the first part of the string until '\n' or '\r'
+            line = str.substr(0, str.find("\r\n"));
+            clientInput.push_back(line);
             // Save the rest of the string to the next iteration
             rest = str.substr(str.find("\n") + 1, str.length());
             regex regex(",");
@@ -98,15 +100,16 @@ public:
             str = rest;
         }
 
+        problemStr = this->problemToString(clientInput);
         // If solution already exists in the cache
-        if (cacheManager->isSolutionExists(matrixObj)) {
+        if (cacheManager->isSolutionExists(problemStr)) {
             // Get the solution from the cache
-            solution = cacheManager->getSolution(matrixObj);
+            solution = cacheManager->getSolution(problemStr);
         } else {
             // Get solution from the solver
             solution = solver->solve(matrixObj);
             // Insert the problem and its solution to the cache
-            cacheManager->insertSolution(matrixObj, solution);
+            cacheManager->insertSolution(problemStr, solution);
         }
 
         solutionToSend = &solution[0];
@@ -128,6 +131,18 @@ public:
                 matrix.at(i).at(j)->setDistanceFromDest(distance);
             }
         }
+    }
+
+    string problemToString(vector<string> clientInput) {
+        hash<string> str_hash;
+        size_t hashResult;
+        string problemToHash = "", problemStr;
+        for (string s : clientInput) {
+            problemToHash += s;
+        }
+        hashResult = str_hash(problemToHash);
+        problemStr = to_string(hashResult);
+        return problemStr;
     }
 };
 

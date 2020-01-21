@@ -46,7 +46,7 @@ public:
                 this->insertSolution(problem, obj);
                 return obj;
             }
-            // If key doesn't exist both in cache and filesystem
+        // If key doesn't exist both in cache and filesystem
         } else {
             cerr << "Error: key does not exist" << endl;
         }

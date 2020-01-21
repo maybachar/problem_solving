@@ -2,6 +2,7 @@
 #define PROBLEM_SOLVING_STATE_H
 
 #include <string>
+#include <limits>
 
 using namespace std;
 
@@ -11,11 +12,13 @@ class State {
     // Cost to get to this state
     double cost = 0;
     double accumulateCost = 0;
-    double distanceFromDest;
-    bool visited;
+    bool visited = false;
     bool isInitial = false;
     bool isGoal = false;
     State<T>* cameFrom = nullptr;
+    double f = numeric_limits<double>::infinity();
+    double g = numeric_limits<double>::infinity();
+    double distanceFromDest;
 public:
     /// Constructor
     State(T stateTemp, double c) {
@@ -43,9 +46,9 @@ public:
         return this->cameFrom;
     }
 
-     double getCost() {
+    double getCost() {
         return this->cost;
-     }
+    }
 
     void setVisited(bool val) {
         this->visited = val;
@@ -75,8 +78,28 @@ public:
         this->accumulateCost += addCost;
     }
 
+    void setAccumulateCost(double setCost){
+        this->accumulateCost = setCost;
+    }
+
     double getAccumulateCost() {
         return this->accumulateCost;
+    }
+
+    double getF() {
+        return this->f;
+    }
+
+    void setF(double fTemp) {
+        this->f = fTemp;
+    }
+
+    double getG() {
+        return this->g;
+    }
+
+    void setG(double gTemp) {
+        this->g = gTemp;
     }
 
     void setDistanceFromDest(double distance) {
