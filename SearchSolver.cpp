@@ -44,5 +44,6 @@ string SearchSolver::solve(Searchable<Point*>* problem) {
         path += direction + ",";
     }
     path = path.substr(0, path.size() - 1);
+    path += "\n";
     return path;
 }
