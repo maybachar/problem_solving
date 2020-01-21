@@ -26,7 +26,7 @@ public:
 
     virtual void handleClient(int client_socket) {
         int is_sent;
-        string bufferStr, problem, solution;
+        string bufferStr, problem, fileName, solution;
         char* solutionToSend;
         while (true) {
             char buffer[1024] = {0};
@@ -39,15 +39,16 @@ public:
             if (problem == "end") {
                 return;
             } else {
+                fileName = this->getFileName(problem);
                 // If solution already exists in the cache
-                if (cacheManager->isSolutionExists(problem)) {
+                if (cacheManager->isSolutionExists(fileName)) {
                     // Get the solution from the cache
-                    solution = cacheManager->getSolution(problem);
+                    solution = cacheManager->getSolution(fileName);
                 } else {
                     // Get solution from the solver
                     solution = solver->solve(problem);
                     // Insert the problem and its solution to the cache
-                    cacheManager->insertSolution(problem, solution);
+                    cacheManager->insertSolution(fileName, solution);
                 }
             }
             solutionToSend = &solution[0];
@@ -58,6 +59,13 @@ public:
                 exit(-1);
             }
         }
+    }
+
+    string getFileName(string problem) {
+        hash<string> str_hash;
+        size_t hashResult;
+        hashResult = str_hash(problem);
+        return to_string(hashResult);
     }
 };
 
