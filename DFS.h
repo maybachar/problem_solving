@@ -22,11 +22,10 @@ public:
     virtual Solution search(Searchable<T> *searchable) {
         stackD.push(searchable->getInitialState());
         searchable->getInitialState()->setVisited(true);
-        this->numOfNodesEvaluated++;
         if(searchable->getInitialState()->getCost() == -1 && searchable->getGoalState()->getCost() == -1){
             return vec;
         }
-        while (!stackD.empty()){
+        while (!stackD.empty()) {
             // Pop a vertex from stack and print it
             s = stackD.top();
             stackD.pop();
@@ -49,7 +48,7 @@ public:
             for (State<T>* i : successors) {
                 if (i->isVisited() == false) {
                     stackD.push(i);
-                    if(i->getCameFrom() != nullptr) {
+                    if(i->getCameFrom() == nullptr) {
                         i->setCameFrom(s);
                     }
                 }
