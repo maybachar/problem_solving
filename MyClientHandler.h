@@ -31,9 +31,9 @@ public:
 
 
     virtual void handleClient(int client_socket) {
-        int is_sent, xPos = 0, yPos = 0, iterAfterEnd = 0, row, col;
+        int is_sent, xPos = 0, yPos = 0, iterAfterEnd = 0, row, col, numOfRows = 0, i;
         double cost;
-        string str = "", bufferStr, rest, line, problem, solution, problemStr;
+        string str = "", data = "", dataForMatrix, bufferStr, rest, line, problem, solution, problemStr;
         Matrix* matrixObj = nullptr;
         Point* point;
         State<Point*> *state = nullptr, *initialState = nullptr, *goalState = nullptr;
@@ -41,8 +41,10 @@ public:
         vector<vector<State<Point*>*>> matrix;
         vector<string> clientInput;
         char* solutionToSend;
+
         // Read matrix from client
-        while (iterAfterEnd <= 2) {
+        while (line != "end") {
+            numOfRows++;
             char buffer[1024] = {0};
             // Read line from client
             read(client_socket, buffer, 1024);
@@ -52,55 +54,60 @@ public:
             str = str + bufferStr;
             // Get the first part of the string until '\n' or '\r'
             line = str.substr(0, str.find("\r\n"));
-            clientInput.push_back(line);
+            // Remove spaces
+            line.erase(remove(line.begin(), line.end(), ' '), line.end());
+            data += line + "\n";
             // Save the rest of the string to the next iteration
-            rest = str.substr(str.find("\n") + 1, str.length());
+            str = str.substr(str.find("\n") + 1, str.length());
+        }
+        numOfRows -= 3;
+        dataForMatrix = data;
+        for (i = 0; i < numOfRows; i++) {
+            // Get the first part of the string until '\n'
+            line = dataForMatrix.substr(0, dataForMatrix.find("\n"));
+            // Save the rest of the string to the next iteration
+            dataForMatrix = dataForMatrix.substr(dataForMatrix.find("\n") + 1, dataForMatrix.length());
             regex regex(",");
             // Separate the values by ',' and put them in vector
             vector<string> out(
                     sregex_token_iterator(line.begin(), line.end(), regex, -1),
                     sregex_token_iterator());
-            if (line == "end") {
-                iterAfterEnd++;
-            // Set initial state
-            } else if (iterAfterEnd == 1) {
-                row = stoi(out[0]);
-                col = stoi(out[1]);
-                matrix.at(row).at(col)->setIsSource();
-                initialState = matrix.at(row).at(col);
-                iterAfterEnd++;
-            // Set goal state
-            } else if (iterAfterEnd == 2) {
-                row = stoi(out[0]);
-                col = stoi(out[1]);
-                matrix.at(row).at(col)->setIsDest();
-                goalState = matrix.at(row).at(col);
-                this->setDistancesFromDest(matrix, row, col);
-                // Create a new matrix
-                matrixObj = new Matrix(matrix, initialState, goalState);
-                break;
-            // Create the matrix
-            } else {
-                // Create vector of one row in the matrix
-                for (string s : out) {
-                    cost = stod(s);
-                    point = new Point(xPos, yPos);
-                    state = new State<Point*>(point, cost);
-                    matrixRow.push_back(state);
-                    yPos++;
-                }
-                // Insert the row to the matrix
-                matrix.push_back(matrixRow);
-                matrixRow.clear();
-                yPos = 0;
-                xPos++;
+            // Create vector of one row in the matrix
+            for (string s : out) {
+                cost = stod(s);
+                point = new Point(xPos, yPos);
+                state = new State<Point*>(point, cost);
+                matrixRow.push_back(state);
+                yPos++;
             }
+            // Insert the row to the matrix
+            matrix.push_back(matrixRow);
+            matrixRow.clear();
+            yPos = 0;
+            xPos++;
             // Clear the vector for the next iteration
             out.clear();
-            str = rest;
         }
+        regex regex(",|\n");
+        // Separate the values by ',' or '\n' and put them in vector
+        vector<string> out(
+                sregex_token_iterator(dataForMatrix.begin(), dataForMatrix.end(), regex,
+                        -1),sregex_token_iterator());
+        // Set initial state
+        row = stoi(out[0]);
+        col = stoi(out[1]);
+        matrix.at(row).at(col)->setIsSource();
+        initialState = matrix.at(row).at(col);
+        // Set goal state
+        row = stoi(out[2]);
+        col = stoi(out[3]);
+        matrix.at(row).at(col)->setIsDest();
+        goalState = matrix.at(row).at(col);
+        this->setDistancesFromDest(matrix, row, col);
+        // Create a new matrix
+        matrixObj = new Matrix(matrix, initialState, goalState);
 
-        problemStr = this->problemToString(clientInput);
+        problemStr = this->problemHashFunc(data);
         // If solution already exists in the cache
         if (cacheManager->isSolutionExists(problemStr)) {
             // Get the solution from the cache
@@ -119,6 +126,7 @@ public:
             cerr << "Could not send solution to client" << endl;
             exit(-1);
         }
+        close(client_socket);
     }
 
     void setDistancesFromDest(vector<vector<State<Point*>*>> &matrix, int destX, int destY) {
@@ -133,14 +141,11 @@ public:
         }
     }
 
-    string problemToString(vector<string> clientInput) {
+    string problemHashFunc(string clientInput) {
         hash<string> str_hash;
         size_t hashResult;
-        string problemToHash = "", problemStr;
-        for (string s : clientInput) {
-            problemToHash += s;
-        }
-        hashResult = str_hash(problemToHash);
+        string problemStr;
+        hashResult = str_hash(clientInput);
         problemStr = to_string(hashResult);
         return problemStr;
     }

@@ -33,8 +33,8 @@ namespace boot {
 
         void matrixMain(int argc, char *argv[]) {
             int port = atoi(argv[1]);
-            Searcher<Point*, vector<State<Point*>*>>* searcher = new DFS<Point*, vector<State<Point*>*>>();
-            //Searcher<Point*, vector<State<Point*>*>>* searcher = new AStar<Point*, vector<State<Point*>*>>();
+            //Searcher<Point*, vector<State<Point*>*>>* searcher = new DFS<Point*, vector<State<Point*>*>>();
+            Searcher<Point*, vector<State<Point*>*>>* searcher = new AStar<Point*, vector<State<Point*>*>>();
             Solver<Searchable<Point*>*, string>* sr = new SearchSolver(searcher);
             CacheManager<string, string>* cm = new FileCacheManager<string, string>();
             ClientHandler* handler = new MyClientHandler<Searchable<Point*>*, string>(sr, cm);

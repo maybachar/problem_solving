@@ -48,7 +48,7 @@ void MySerialServer::open(int port, ClientHandler* handler) {
 
     // Set timeout for client connection
     struct timeval tv;
-    tv.tv_sec = 30; /////////////////////////////////////// change to 2 minutes
+    tv.tv_sec = 120;
     tv.tv_usec = 0;
     setsockopt(this->socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
 

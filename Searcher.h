@@ -9,13 +9,13 @@ using namespace std;
 template <typename T, typename Solution>
 class Searcher {
 protected:
-    double numOfNodesEvaluated = 0;
+    int numOfNodesEvaluated = 0;
 public:
     virtual ~Searcher() {}
 
     virtual Solution search(Searchable<T> *searchable) {}
 
-    virtual double getSearcherNumOfNodes(){
+    virtual int getNumOfNodesEvaluated() {
         return this->numOfNodesEvaluated;
     }
 
