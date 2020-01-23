@@ -56,6 +56,8 @@ public:
             line = str.substr(0, str.find("\r\n"));
             // Remove spaces
             line.erase(remove(line.begin(), line.end(), ' '), line.end());
+            line.erase(remove(line.begin(), line.end(), '\r'), line.end());
+            line.erase(remove(line.begin(), line.end(), '\n'), line.end());
             data += line + "\n";
             // Save the rest of the string to the next iteration
             str = str.substr(str.find("\n") + 1, str.length());
