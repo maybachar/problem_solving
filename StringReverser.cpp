@@ -18,3 +18,7 @@ string StringReverser::solve(string problem) {
     }
     return reverseStr + "\n";
 }
+
+Solver<string,string>* StringReverser::deepCopy() {
+    return new StringReverser();
+}

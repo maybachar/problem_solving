@@ -11,6 +11,7 @@ public:
     StringReverser();
     virtual ~StringReverser();
     virtual string solve(string problem);
+    virtual Solver<string,string>* deepCopy();
 };
 
 #endif //PROBLEM_SOLVING_STRINGREVERSER_H

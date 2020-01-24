@@ -10,9 +10,6 @@ using namespace std;
 
 template <typename T, typename Solution>
 class BestFirstSearch : public Searcher<T,Solution> {
-    list<State<T>*> pq;
-    vector<State<T>*> successors;
-    vector<State<T>*> vec;
 public:
     BestFirstSearch() {
         this->searcherName = "BestFirstSearch";
@@ -21,6 +18,9 @@ public:
     virtual ~BestFirstSearch() {}
 
     virtual Solution search(Searchable<T> *searchable) {
+        list<State<T>*> pq;
+        vector<State<T>*> successors;
+        vector<State<T>*> vec;
         searchable->getInitialState()->setAccumulateCost(0);
         if (searchable->getInitialState()->getCost() == -1 || searchable->getGoalState()->getCost() == -1) {
             return vec;
@@ -60,6 +60,10 @@ public:
             }
         }
         return min;
+    }
+
+    virtual Searcher<T,Solution>* deepCopy() {
+        return new BestFirstSearch();
     }
 };
 

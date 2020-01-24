@@ -14,7 +14,7 @@ protected:
 public:
     virtual ~Searcher() {}
 
-    virtual Solution search(Searchable<T> *searchable) {}
+    virtual Solution search(Searchable<T> *searchable) = 0;
 
     virtual int getNumOfNodesEvaluated() {
         return this->numOfNodesEvaluated;
@@ -23,6 +23,8 @@ public:
     virtual string getName() {
         return this->searcherName;
     }
+
+    virtual Searcher<T,Solution>* deepCopy() = 0;
 
     virtual vector<State<T>*> backTrace(State<T>* source, State<T>* dest) {
         vector<State<T>*> solution;

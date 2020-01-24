@@ -57,3 +57,8 @@ string SearchSolver::solve(Searchable<Point*>* problem) {
 string SearchSolver::getName() {
     return this->searcher->getName();
 }
+
+Solver<Searchable<Point*>*, string>* SearchSolver::deepCopy() {
+    Searcher<Point*, vector<State<Point*>*>>* newSearcher = this->getSearcher()->deepCopy();
+    return new SearchSolver(newSearcher);
+}

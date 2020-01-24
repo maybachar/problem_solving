@@ -10,6 +10,7 @@
 #include "DFS.h"
 #include "BestFirstSearch.h"
 #include "AStar.h"
+#include "MyParallelServer.h"
 #include <string>
 #include <vector>
 
@@ -40,7 +41,8 @@ namespace boot {
             Solver<Searchable<Point*>*, string>* sr = new SearchSolver(searcher);
             CacheManager<string, string>* cm = new FileCacheManager<string, string>();
             ClientHandler* handler = new MyClientHandler<Searchable<Point*>*, string>(sr, cm);
-            server_side::Server* server = new MySerialServer();
+            //server_side::Server* server = new MySerialServer();
+            server_side::Server* server = new MyParallelServer();
             server->open(port, handler);
             delete searcher;
             delete sr;

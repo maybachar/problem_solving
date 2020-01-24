@@ -10,10 +10,6 @@ using namespace std;
 
 template <typename T, typename Solution>
 class BFS : public Searcher <T,Solution> {
-    queue<State<T>*> queueB;
-    vector<State<T>*> successors;
-    State<T>* n;
-    vector<State<T>*> vec;
 public:
     BFS() {
         this->searcherName = "BFS";
@@ -22,6 +18,10 @@ public:
     virtual ~BFS() {}
 
     virtual Solution search(Searchable<T> *searchable) {
+        queue<State<T>*> queueB;
+        vector<State<T>*> successors;
+        State<T>* n;
+        vector<State<T>*> vec;
         queueB.push(searchable->getInitialState());
         searchable->getInitialState()->setVisited(true);
         if(searchable->getInitialState()->getCost() == -1 || searchable->getGoalState()->getCost() == -1) {
@@ -45,6 +45,10 @@ public:
         }
         // There is no path
         return vec;
+    }
+
+    virtual Searcher<T,Solution>* deepCopy() {
+        return new BFS<T,Solution>();
     }
 };
 

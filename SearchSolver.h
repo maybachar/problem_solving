@@ -14,6 +14,10 @@ public:
     virtual ~SearchSolver();
     virtual string solve(Searchable<Point*>* problem);
     virtual string getName();
+    virtual Solver<Searchable<Point*>*, string>* deepCopy();
+    virtual Searcher<Point*, vector<State<Point*>*>>* getSearcher() {
+        return this->searcher;
+    }
 };
 
 

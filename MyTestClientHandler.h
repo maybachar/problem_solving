@@ -67,6 +67,11 @@ public:
         hashResult = str_hash(problem);
         return to_string(hashResult);
     }
+
+    ClientHandler* deepCopy() {
+        ClientHandler* newClientHandler = new MyTestClientHandler<Problem, Solution>(this->solver->deepCopy(),this->cacheManager);
+        return newClientHandler;
+    }
 };
 
 #endif //PROBLEM_SOLVING_MYTESTCLIENTHANDLER_H

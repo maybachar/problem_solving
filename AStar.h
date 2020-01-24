@@ -69,6 +69,10 @@ public:
         }
         return min;
     }
+
+    virtual Searcher<T,Solution>* deepCopy() {
+        return new AStar<T,Solution>();
+    }
 };
 
 #endif //PROBLEM_SOLVING_ASTAR_H

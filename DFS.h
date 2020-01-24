@@ -10,10 +10,6 @@ using namespace std;
 
 template <typename T, typename Solution>
 class DFS : public Searcher<T,Solution> {
-    stack<State<T>*> stackD;
-    vector<State<T>*> successors;
-    State<T>* s;
-    vector<State<T>*> vec;
 public:
     DFS() {
         this->searcherName = "DFS";
@@ -22,6 +18,10 @@ public:
     virtual ~DFS() {}
 
     virtual Solution search(Searchable<T> *searchable) {
+        stack<State<T>*> stackD;
+        vector<State<T>*> successors;
+        State<T>* s;
+        vector<State<T>*> vec;
         stackD.push(searchable->getInitialState());
         searchable->getInitialState()->setVisited(true);
         if(searchable->getInitialState()->getCost() == -1 || searchable->getGoalState()->getCost() == -1){
@@ -58,6 +58,10 @@ public:
         }
         // There is no path.
         return vec;
+    }
+
+    virtual Searcher<T,Solution>* deepCopy() {
+        return new DFS<T,Solution>();
     }
 };
 

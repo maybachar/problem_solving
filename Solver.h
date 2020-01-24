@@ -10,11 +10,12 @@ class Solver {
 protected:
     string solverName;
 public:
-    virtual Solution solve(Problem problem) = 0;
     virtual ~Solver() {}
+    virtual Solution solve(Problem problem) = 0;
     virtual string getName() {
         return this->solverName;
     }
+    virtual Solver<Problem,Solution>* deepCopy() = 0;
 };
 
 #endif //PROBLEM_SOLVING_SOLVER_H

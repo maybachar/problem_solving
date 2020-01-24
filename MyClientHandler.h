@@ -152,6 +152,11 @@ public:
         problemStr = to_string(hashResult);
         return problemStr;
     }
+
+    ClientHandler* deepCopy() {
+        ClientHandler* newClientHandler = new MyClientHandler<Problem, Solution>(this->solver->deepCopy(),this->cacheManager);
+        return newClientHandler;
+    }
 };
 
 
