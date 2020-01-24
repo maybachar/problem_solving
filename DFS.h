@@ -15,21 +15,23 @@ class DFS : public Searcher<T,Solution> {
     State<T>* s;
     vector<State<T>*> vec;
 public:
-    DFS() {}
+    DFS() {
+        this->searcherName = "DFS";
+    }
 
     virtual ~DFS() {}
 
     virtual Solution search(Searchable<T> *searchable) {
         stackD.push(searchable->getInitialState());
         searchable->getInitialState()->setVisited(true);
-        if(searchable->getInitialState()->getCost() == -1 && searchable->getGoalState()->getCost() == -1){
+        if(searchable->getInitialState()->getCost() == -1 || searchable->getGoalState()->getCost() == -1){
             return vec;
         }
         while (!stackD.empty()) {
             // Pop a vertex from stack and print it
             s = stackD.top();
             stackD.pop();
-            if(searchable->isGoalState(s)){
+            if(searchable->isGoalState(s)) {
                 return this->backTrace(searchable->getInitialState(), s);
             }
             // Stack may contain same vertex twice. So
@@ -54,7 +56,7 @@ public:
                 }
             }
         }
-        //there is no path.
+        // There is no path.
         return vec;
     }
 };

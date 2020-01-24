@@ -15,33 +15,35 @@ class BFS : public Searcher <T,Solution> {
     State<T>* n;
     vector<State<T>*> vec;
 public:
-    BFS() {}
+    BFS() {
+        this->searcherName = "BFS";
+    }
 
     virtual ~BFS() {}
 
     virtual Solution search(Searchable<T> *searchable) {
         queueB.push(searchable->getInitialState());
         searchable->getInitialState()->setVisited(true);
-        if(searchable->getInitialState()->getCost() == -1 && searchable->getGoalState()->getCost() == -1){
+        if(searchable->getInitialState()->getCost() == -1 || searchable->getGoalState()->getCost() == -1) {
             return vec;
         }
-        while (!queueB.empty()){
+        while (!queueB.empty()) {
             this->numOfNodesEvaluated++;
             n = queueB.front();
             queueB.pop();
-            if(searchable->isGoalState(n)){
+            if(searchable->isGoalState(n)) {
                 return this->backTrace(searchable->getInitialState(), n);
             }
             successors = searchable->getAllPossibleStates(n);
             for(State<T>* i : successors){
-                if(i->isVisited() == false && i->getCost() != -1){
+                if(i->isVisited() == false && i->getCost() != -1) {
                     i->setVisited(true);
                     i->setCameFrom(n);
                     queueB.push(i);
                 }
             }
         }
-        //there is no path.
+        // There is no path
         return vec;
     }
 };
