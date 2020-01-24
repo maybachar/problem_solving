@@ -3,7 +3,9 @@
 using namespace std;
 
 /// Constructor
-StringReverser::StringReverser() {}
+StringReverser::StringReverser() {
+    this->solverName = "StringReverser";
+}
 
 /// Destructor
 StringReverser::~StringReverser() {}

@@ -10,6 +10,7 @@ template <typename T, typename Solution>
 class Searcher {
 protected:
     int numOfNodesEvaluated = 0;
+    string searcherName;
 public:
     virtual ~Searcher() {}
 
@@ -17,6 +18,10 @@ public:
 
     virtual int getNumOfNodesEvaluated() {
         return this->numOfNodesEvaluated;
+    }
+
+    virtual string getName() {
+        return this->searcherName;
     }
 
     virtual vector<State<T>*> backTrace(State<T>* source, State<T>* dest) {

@@ -16,6 +16,10 @@ string SearchSolver::solve(Searchable<Point*>* problem) {
     vector<string> directions;
     // Get a vector of states in the shortest path
     vector<State<Point*>*> solution = this->searcher->search(problem);
+    // If there is no path
+    if (solution.empty()) {
+        return "There is no path from source to destination\n";
+    }
     int totalCost = solution.at(0)->getCost();
     int pathLength = solution.size(), i, numOfNodesEvaluated = this->searcher->getNumOfNodesEvaluated();
     Point *currentLocation, *nextLocation;
@@ -48,4 +52,8 @@ string SearchSolver::solve(Searchable<Point*>* problem) {
     path += "\n";
     cout << "Number of nodes evaluated: " << numOfNodesEvaluated << endl;
     return path;
+}
+
+string SearchSolver::getName() {
+    return this->searcher->getName();
 }

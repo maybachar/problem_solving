@@ -13,6 +13,7 @@ public:
     SearchSolver(Searcher<Point*, vector<State<Point*>*>>* searcherObj);
     virtual ~SearchSolver();
     virtual string solve(Searchable<Point*>* problem);
+    virtual string getName();
 };
 
 

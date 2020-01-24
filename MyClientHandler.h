@@ -124,6 +124,7 @@ public:
         solutionToSend = &solution[0];
         // Send solution to client
         is_sent = send(client_socket, solutionToSend, strlen(solutionToSend), 0);
+        cout << "Path: " << solutionToSend;
         if (is_sent == -1) {
             cerr << "Could not send solution to client" << endl;
             exit(-1);
@@ -146,8 +147,8 @@ public:
     string problemHashFunc(string clientInput) {
         hash<string> str_hash;
         size_t hashResult;
-        string problemStr;
-        hashResult = str_hash(clientInput);
+        string problemStr, solverName = this->solver->getName();
+        hashResult = str_hash(clientInput + solverName);
         problemStr = to_string(hashResult);
         return problemStr;
     }
