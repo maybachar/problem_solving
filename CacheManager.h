@@ -13,8 +13,7 @@ protected:
     int capacity = 5;
     list<pair<Problem,Solution>> lru_list;
     typename list<pair<Problem,Solution>>::iterator itr;
-    unordered_map <string, typename list<pair<Problem,Solution>>::iterator> cache;
-    unordered_map<Problem, string> problemsFiles;
+    unordered_map<string, typename list<pair<Problem,Solution>>::iterator> cache;
 public:
     virtual bool isSolutionExists(Problem problem) = 0;
     virtual Solution getSolution(Problem problem) = 0;

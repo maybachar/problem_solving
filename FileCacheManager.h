@@ -18,28 +18,46 @@ public:
     virtual ~FileCacheManager() {}
 
     virtual bool isSolutionExists(Problem problem) {
-        return (this->problemsFiles.find(problem) != this->problemsFiles.end());
-    };
+        string file_name = problem + ".txt";
+        // If Solution exists in cache
+        if (this->cache.find(problem) != this->cache.end()) {
+            return true;
+        } else {
+            ifstream in_file(file_name);
+            // If solution exists in the filesystem
+            if (in_file) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
     virtual Solution getSolution(Problem problem) {
         Solution obj;
-        string file_name;
+        string file_name = problem + ".txt";
         if (this->isSolutionExists(problem)) {
             // If the key exists in the cache
             if (this->cache.find(problem) != this->cache.end()) {
+                cout << "Solution exists in cache" << endl;
                 // Update the key to be the most recently used
                 this->lru_list.push_front(*this->cache.find(problem)->second);
                 this->lru_list.erase(this->cache.find(problem)->second);
                 this->cache[problem] = this->lru_list.begin();
                 // Return the object that matches the key
                 return this->cache.find(problem)->second->second;
-                // If the key exists in the filesystem (it means that the file is open)
+            // If the key exists in the filesystem
             } else {
-                file_name = this->problemsFiles.find(problem)->second;
+                cout << "Solution exists in files" << endl;
                 // Open a file for reading in binary mode
-                ifstream in_file(file_name, ios::binary);
-                // Read the object from the binary input file
-                in_file.read((char *) &obj, sizeof(obj));
+                ifstream in_file(file_name);
+                // Check if the file is open
+                if (!in_file) {
+                    cerr << "Error: input file could not be opened" << endl;
+                }
+                // Read the object from the input file
+                getline(in_file, obj);
+                obj += '\n';
                 // Close the file
                 in_file.close();
                 // Insert key and object into the cache
@@ -48,7 +66,7 @@ public:
             }
         // If key doesn't exist both in cache and filesystem
         } else {
-            cerr << "Error: key does not exist" << endl;
+            cerr << "Error: problem does not exist" << endl;
         }
     }
 
@@ -68,7 +86,7 @@ public:
             this->lru_list.push_front({problem,solution});
             // Insert the new pair into the map
             this->cache.insert({problem, this->lru_list.begin()});
-            // If the key exists in the cache
+        // If the key exists in the cache
         } else {
             // Update the key to be the most recently used
             this->lru_list.erase(this->cache.find(problem)->second);
@@ -77,17 +95,15 @@ public:
             this->cache[problem] = this->lru_list.begin();
         }
         // Open a file for writing in binary mode
-        ofstream out_file {file_name, ios::binary};
+        ofstream out_file (file_name);
         // Check if the file is open
         if (!out_file) {
-            throw "Error: output file could not be opened";
+            cerr << "Error: output file could not be opened" << endl;
         } else {
             // Write the object to the binary output file
-            out_file.write((char *) &solution, sizeof(solution));
+            out_file << solution << endl;
             // Close the file
             out_file.close();
-            // Insert the problem and the file name to the files map
-            this->problemsFiles.insert({problem,file_name});
         }
     }
 };
