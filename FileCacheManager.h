@@ -39,7 +39,6 @@ public:
         if (this->isSolutionExists(problem)) {
             // If the key exists in the cache
             if (this->cache.find(problem) != this->cache.end()) {
-                cout << "Solution exists in cache" << endl;
                 // Update the key to be the most recently used
                 this->lru_list.push_front(*this->cache.find(problem)->second);
                 this->lru_list.erase(this->cache.find(problem)->second);
@@ -48,7 +47,6 @@ public:
                 return this->cache.find(problem)->second->second;
             // If the key exists in the filesystem
             } else {
-                cout << "Solution exists in files" << endl;
                 // Open a file for reading in binary mode
                 ifstream in_file(file_name);
                 // Check if the file is open
