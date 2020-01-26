@@ -1,6 +1,5 @@
 #include <iostream>
 #include "SearchSolver.h"
-#include "Searcher.h"
 
 /// Constructor
 SearchSolver::SearchSolver(Searcher<Point*, vector<State<Point*>*>>* searcherObj) {
@@ -10,7 +9,15 @@ SearchSolver::SearchSolver(Searcher<Point*, vector<State<Point*>*>>* searcherObj
 /// Destructor
 SearchSolver::~SearchSolver() {}
 
-
+/**
+ * The function receives a matrix and needs to find the lowest cost path from
+ * source to destination. It executes the searcher's search() function and
+ * gets a vector of states in the shortest path. From this vector, the function
+ * creates a string of the lowest cost path and returns it.
+ *
+ * @param problem a matrix to find the lowest cost path from source to destination.
+ * @return solution a string of the lowest cost path.
+ */
 string SearchSolver::solve(Searchable<Point*>* problem) {
     string path = "", totalCostStr;
     vector<string> directions;
@@ -54,10 +61,21 @@ string SearchSolver::solve(Searchable<Point*>* problem) {
     return path;
 }
 
+/**
+ * The function returns the name of the searcher.
+ *
+ * @return the name of the searcher.
+ */
 string SearchSolver::getName() {
     return this->searcher->getName();
 }
 
+/**
+ * The function does a deep copy to this SearchSolver. It calls it's constructor
+ * and returns the new object.
+ *
+ * @return new SearchSolver.
+ */
 Solver<Searchable<Point*>*, string>* SearchSolver::deepCopy() {
     Searcher<Point*, vector<State<Point*>*>>* newSearcher = this->getSearcher()->deepCopy();
     return new SearchSolver(newSearcher);
