@@ -3,6 +3,11 @@
 
 using namespace std;
 
+/**
+ * ClientHandler Interface
+ *
+ * This class is an interface to classes that are responsible for handling clients.
+ */
 class ClientHandler {
 public:
     virtual void handleClient(int socket) = 0;
