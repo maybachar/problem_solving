@@ -4,8 +4,15 @@
 #include <vector>
 #include "Searchable.h"
 #include "Point.h"
+#include "State.h"
 
 using namespace std;
+
+/**
+ * Matrix class
+ *
+ * This class represents a matrix in which each cell is a state.
+ */
 
 class Matrix : public Searchable<Point*> {
     vector<vector<State<Point*>*>> matrix;
@@ -15,7 +22,7 @@ class Matrix : public Searchable<Point*> {
     int columns;
 public:
     Matrix(vector<vector<State<Point*>*>> mat, State<Point*>* init, State<Point*>* goal);
-    ~Matrix();
+    virtual ~Matrix();
     virtual State<Point*>* getInitialState();
     virtual State<Point*>* getGoalState();
     virtual bool isGoalState(State<Point*>* state);
