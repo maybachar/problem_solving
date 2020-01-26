@@ -7,6 +7,12 @@
 
 using namespace std;
 
+/**
+ * CacheManager Interface
+ *
+ * This class is an interface to classes that are responsible for keeping program
+ * data and receiving it quickly when it is needed.
+ */
 template <class Problem, class Solution>
 class CacheManager {
 protected:
