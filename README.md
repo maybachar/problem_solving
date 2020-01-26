@@ -38,7 +38,7 @@ open/close and dependency Inversion.
 ## Start Running
 * Compile the program in the linux terminal:
 ```
-g++ -std=c++14 *.cpp *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
+g++ -std=c++14 *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
 ```
 * Run the program and give a port number as argument:
 ```
