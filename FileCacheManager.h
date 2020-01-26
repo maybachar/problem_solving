@@ -8,6 +8,17 @@
 
 using namespace std;
 
+/**
+ * FileCacheManager class
+ *
+ * The class implements CacheManager interface.
+ * This class is responsible for saving solutions to problems that were solved
+ * in previous program runs, so when the program receives a problem that is already
+ * resolved in the past, it can returns the solution without the need to
+ * recalculate it.
+ * The solutions are saved in cache and in files.
+ */
+
 template <class Problem, class Solution>
 class FileCacheManager : public CacheManager<Problem, Solution> {
 public:
@@ -17,6 +28,13 @@ public:
     /// Destructor
     virtual ~FileCacheManager() {}
 
+    /**
+     * The function receives a problem and checks if solution exists in cache
+     * or in files.
+     *
+     * @param problem a problem that needs to be solved.
+     * @return true - if solution exits, false - otherwise.
+     */
     virtual bool isSolutionExists(Problem problem) {
         string file_name = problem + ".txt";
         // If Solution exists in cache
@@ -33,6 +51,13 @@ public:
         }
     }
 
+    /**
+     * The function returns the solution that matches the problem, either from
+     * cache or filesystem.
+     *
+     * @param problem a problem that needs to be solved.
+     * @return solution to the problem.
+     */
     virtual Solution getSolution(Problem problem) {
         Solution obj;
         string file_name = problem + ".txt";
@@ -65,9 +90,16 @@ public:
         // If key doesn't exist both in cache and filesystem
         } else {
             cerr << "Error: problem does not exist" << endl;
+            exit (-1);
         }
     }
 
+    /**
+     * The function inserts problem and solution into cache and filesystem.
+     *
+     * @param problem a problem that needs to be solved.
+     * @param solution solution to the problem.
+     */
     virtual void insertSolution(Problem problem, Solution solution) {
         Problem least_rec_used;
         string file_name = problem + ".txt";
