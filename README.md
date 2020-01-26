@@ -80,16 +80,11 @@ g++ -std=c++14 *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.ou
 ### algorithms_experiment
 
 #### Matrices_results
-* Matrix_15x15_result.txt
-* Matrix_19x19_result.txt
-* Matrix_24x24_result.txt
-* Matrix_28x28_result.txt
-* Matrix_34x34_result.txt
-* Matrix_37x37_result.txt
-* Matrix_42x42_result.txt
-* Matrix_45x45_result.txt
-* Matrix_48x48_result.txt
-* Matrix_50x50_result.txt
+* Matrices.txt
+* A*_results.txt
+* Best_First_Search_results.txt
+* BFS_results.txt
+* DFS_results.txt
 
 #### Graph of the experiment's results
 * algorithms_experiment_graph.pdf
