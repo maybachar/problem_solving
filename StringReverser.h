@@ -6,6 +6,17 @@
 
 using namespace std;
 
+/**
+ * StringReverser Class
+ *
+ * This class is implements the interface solver which get a problem a and return
+ * a solution.
+ * The class knows to solve a given problem- return a reverse string to a given string.
+ * It also knows to return a deep copy of StringReverser.
+ *
+ * @param Problem that we want to solve - a string.
+ * @param Solution we solved for a given problem - a reversed string.
+ */
 class StringReverser : public Solver<string, string> {
 public:
     StringReverser();
@@ -15,3 +26,4 @@ public:
 };
 
 #endif //PROBLEM_SOLVING_STRINGREVERSER_H
+
