@@ -12,18 +12,41 @@ Matrix::Matrix(vector<vector<State<Point*>*>> mat, State<Point*>* init, State<Po
 /// Destructor
 Matrix::~Matrix() {}
 
+/**
+ * The function returns the initial state in the matrix.
+ *
+ * @return the initial state in the matrix.
+ */
 State<Point*>* Matrix::getInitialState() {
     return this->initialState;
 }
 
+/**
+ * The function returns the goal state in the matrix.
+ *
+ * @return the goal state in the matrix.
+ */
 State<Point*>* Matrix::getGoalState() {
     return this->goalState;
 }
 
+/**
+ * The function receives a state and checks if it is goal state.
+ *
+ * @param state state represents a cell in the matrix.
+ * @return true - if the state is goal state, false - otherwise.
+ */
 bool Matrix::isGoalState(State<Point*>* state) {
     return state->isDest();
 }
 
+/**
+ * The function receives a state and returns all states that can be reached
+ * from that state (neighboring cells in the matrix).
+ *
+ * @param state state represents a cell in the matrix.
+ * @return all states that can be reached from the received state.
+ */
 vector<State<Point*>*> Matrix::getAllPossibleStates(State<Point*>* state) {
     vector<State<Point*>*> possibleStates;
     int xPos = state->getState()->getX();
