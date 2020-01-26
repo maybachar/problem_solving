@@ -47,7 +47,7 @@ g++ -std=c++14 *.cpp *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -
 * Connect to server as client, send a matrix, source and destination and write "end". The server will return the solution.
 
 
-# Files
+## Files
 * main.cpp
 * AStar.h
 * BestFirstSearch.h
