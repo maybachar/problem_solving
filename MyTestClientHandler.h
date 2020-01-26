@@ -1,5 +1,6 @@
 #ifndef PROBLEM_SOLVING_MYTESTCLIENTHANDLER_H
 #define PROBLEM_SOLVING_MYTESTCLIENTHANDLER_H
+
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
@@ -9,6 +10,13 @@
 
 using namespace std;
 
+/**
+ * MyTestClientHandler class
+ *
+ * The class implements ClientHandler interface.
+ * This class reads a problem from a client and sends him a solution.
+ * The problem is a string, and the solution is the reverse string.
+ */
 template <class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
     Solver<Problem, Solution>* solver;
@@ -23,7 +31,14 @@ public:
     /// Destructor
     virtual ~MyTestClientHandler() {}
 
-
+/**
+     * The function reads a string from client. It looks for a solution in cache
+     * and filesystem. If the solution exists, it sends the solution to the client
+     * without solve it again. If solution doesn't exist, the function calls
+     * the solver to solve the problem, and sends the solution to the client.
+     *
+     * @param client_socket number for connection with client.
+     */
     virtual void handleClient(int client_socket) {
         int is_sent;
         string bufferStr, problem, fileName, solution;
@@ -61,6 +76,14 @@ public:
         }
     }
 
+    /**
+     * The function receives the string received from client and returns a unique
+     * number symbolises the string, in order to name the solution file with a
+     * unique name.
+     *
+     * @param clientInput string received from client.
+     * @return unique name for the solution file.
+     */
     string getFileName(string problem) {
         hash<string> str_hash;
         size_t hashResult;
@@ -68,6 +91,12 @@ public:
         return to_string(hashResult);
     }
 
+    /**
+     * The function does a deep copy to this client handler. It calls it's constructor
+     * and returns the new object.
+     *
+     * @return new MyTestClientHandler.
+     */
     ClientHandler* deepCopy() {
         ClientHandler* newClientHandler = new MyTestClientHandler<Problem, Solution>(this->solver->deepCopy(),this->cacheManager);
         return newClientHandler;
