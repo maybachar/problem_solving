@@ -7,6 +7,7 @@ This program created by Ayelet Tennenboim and May Bachar for Advanced Programmin
 
 **May Bachar**
 
+
 ## Introduction
 This program implement a number of search algorithms, compare who is the most successful, and implement the winner as server-side solver.
 
@@ -14,6 +15,7 @@ This project in an advanced programming course is a showcase to our programming 
 The project contains the following elements: use of design and architectural templates, communication and server architecture, use of databases, data streaming, comparison, selection and implementation of algorithms within the system we create and parallel programming using Threads.
 
 In addition, we learned about team work.
+
 
 ## Description
 This program creates a server that listens on the port it get as argument.
@@ -32,6 +34,7 @@ In this program we used Design patterns like bridge and object adapter.
 In addition have kept the programming principles solid such as:
 open/close and dependency Inversion.
 
+
 ## Start Running
 * Compile the program in the linux terminal:
 ```
@@ -42,6 +45,7 @@ g++ -std=c++14 *.cpp *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -
 ./a.out port_number
 ```
 * Connect to server as client, send a matrix, source and destination and write "end". The server will return the solution.
+
 
 # Files
 * main.cpp
@@ -75,7 +79,7 @@ g++ -std=c++14 *.cpp *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -
 ## Attached Files
 ### algorithms_experiment
 
-### Matrices_results
+#### Matrices_results
 * Matrix_15x15_result.txt
 * Matrix_19x19_result.txt
 * Matrix_24x24_result.txt
@@ -87,8 +91,9 @@ g++ -std=c++14 *.cpp *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -
 * Matrix_48x48_result.txt
 * Matrix_50x50_result.txt
 
-### Graph of the experiment's results
+#### Graph of the experiment's results
 * algorithms_experiment_graph.pdf
+
 
 ## Links
 * GitHub: https://github.com/maybachar/problem_solving
